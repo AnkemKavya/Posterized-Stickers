@@ -1,0 +1,289 @@
+/* ==========================================================================
+   POSTERIZED STICKERS — DESIGN SYSTEM & CORE CSS
+   Strictly following the minimalist black & white reference design
+   ========================================================================== */
+
+:root {
+  /* Color Palette - Light Theme (Default) */
+  --bg-page: #F5F5F7;
+  --bg-content: #FFFFFF;
+  --bg-card: #FFFFFF;
+  --bg-sidebar: #111315;
+  --bg-sidebar-hover: #1c1f24;
+  --bg-sidebar-active: #23272e;
+  --bg-input: #F1F3F5;
+  --bg-muted: #F8F9FA;
+  --bg-badge-red: #E53935;
+
+  --text-primary: #171717;
+  --text-secondary: #777777;
+  --text-muted: #9E9E9E;
+  --text-sidebar: #E0E2E6;
+  --text-sidebar-muted: #8E929A;
+  --text-sidebar-white: #FFFFFF;
+
+  --border-subtle: #E8ECEF;
+  --border-card: #E5E7EB;
+  --border-focus: #111315;
+
+  --btn-primary-bg: #151515;
+  --btn-primary-text: #FFFFFF;
+  --btn-primary-hover: #2A2A2A;
+  --btn-secondary-bg: #FFFFFF;
+  --btn-secondary-border: #D1D5DB;
+  --btn-secondary-text: #171717;
+  --btn-secondary-hover: #F3F4F6;
+
+  /* Dimensions */
+  --sidebar-width: 230px;
+  --navbar-height: 62px;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-pill: 9999px;
+
+  /* Typography */
+  --font-main: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-doodle: 'Caveat', cursive, sans-serif;
+
+  /* Subtle Shadows */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.05);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.08);
+
+  --transition-fast: 0.18s ease;
+  --transition-normal: 0.25s ease;
+}
+
+/* Dark Theme Overrides */
+[data-theme='dark'] {
+  --bg-page: #0C0D0E;
+  --bg-content: #121417;
+  --bg-card: #181A1F;
+  --bg-sidebar: #0A0B0C;
+  --bg-sidebar-hover: #16181D;
+  --bg-sidebar-active: #1E2128;
+  --bg-input: #1C1F26;
+  --bg-muted: #15171C;
+
+  --text-primary: #F3F4F6;
+  --text-secondary: #9CA3AF;
+  --text-muted: #6B7280;
+
+  --border-subtle: #252830;
+  --border-card: #282C36;
+  --border-focus: #FFFFFF;
+
+  --btn-primary-bg: #FFFFFF;
+  --btn-primary-text: #111315;
+  --btn-primary-hover: #E5E7EB;
+  --btn-secondary-bg: #181A1F;
+  --btn-secondary-border: #333846;
+  --btn-secondary-text: #F3F4F6;
+  --btn-secondary-hover: #222631;
+
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 14px rgba(0, 0, 0, 0.5);
+}
+
+/* Reset & Base */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+  font-family: var(--font-main);
+  background-color: var(--bg-page);
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+  outline: none;
+}
+
+input, textarea, select {
+  font-family: inherit;
+  font-size: 14px;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+/* ==========================================================================
+   BUTTONS & COMMON UTILITIES
+   ========================================================================== */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 9px 18px;
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: var(--radius-sm);
+  transition: all var(--transition-fast);
+  white-space: nowrap;
+}
+
+.btn-primary {
+  background-color: var(--btn-primary-bg);
+  color: var(--btn-primary-text);
+}
+
+.btn-primary:hover {
+  background-color: var(--btn-primary-hover);
+  transform: translateY(-1px);
+}
+
+.btn-secondary {
+  background-color: var(--btn-secondary-bg);
+  color: var(--btn-secondary-text);
+  border: 1px solid var(--btn-secondary-border);
+}
+
+.btn-secondary:hover {
+  background-color: var(--btn-secondary-hover);
+}
+
+.btn-sm {
+  padding: 6px 12px;
+  font-size: 12px;
+}
+
+.btn-lg {
+  padding: 13px 24px;
+  font-size: 15px;
+}
+
+.btn-whatsapp {
+  background-color: #25D366;
+  color: #FFFFFF;
+}
+
+.btn-whatsapp:hover {
+  background-color: #20BD5A;
+  box-shadow: 0 4px 14px rgba(37, 211, 102, 0.3);
+}
+
+/* Red Quantity Badge */
+.badge-red {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--bg-badge-red);
+  color: #FFFFFF;
+  font-size: 11px;
+  font-weight: 700;
+  border-radius: var(--radius-pill);
+  min-width: 18px;
+  height: 18px;
+  padding: 0 4px;
+  line-height: 1;
+}
+
+/* Section Header Styles */
+.section-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+}
+
+.section-title {
+  font-size: 19px;
+  font-weight: 700;
+  letter-spacing: -0.2px;
+  color: var(--text-primary);
+}
+
+.section-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  transition: color var(--transition-fast);
+}
+
+.section-link:hover {
+  color: var(--text-primary);
+}
+
+/* Carousel Control Arrows */
+.carousel-nav-arrows {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.arrow-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1px solid var(--border-card);
+  background-color: var(--bg-card);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary);
+  transition: all var(--transition-fast);
+}
+
+.arrow-btn:hover {
+  border-color: var(--text-primary);
+  color: var(--text-primary);
+}
+
+/* Toast Container */
+.toast-banner {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background-color: #111315;
+  color: #FFFFFF;
+  padding: 12px 20px;
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  font-weight: 500;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  z-index: 9999;
+  animation: slideUpToast 0.24s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes slideUpToast {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

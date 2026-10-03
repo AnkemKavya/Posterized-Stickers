@@ -1,0 +1,243 @@
+.home-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.home-section {
+  margin-bottom: 38px;
+}
+
+/* Category Grid: 4 items in a row matching screenshot */
+.categories-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+/* Space Grid: 5 items in a row matching screenshot */
+.spaces-row-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 14px;
+}
+
+/* Trending Now: Carousel Row with exactly 6 items */
+.trending-carousel-row {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 14px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  scroll-behavior: smooth;
+  padding-bottom: 4px;
+}
+
+.trending-carousel-row::-webkit-scrollbar {
+  display: none;
+}
+
+.trending-carousel-item {
+  min-width: 0;
+}
+
+/* 4 Column Grid for New Arrivals & Best Sellers */
+.products-horizontal-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+/* Wall Promo Banner */
+.wall-promo-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-card);
+  border-radius: var(--radius-md);
+  padding: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+}
+
+.wall-promo-text {
+  flex: 1.2;
+}
+
+.promo-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background-color: var(--bg-muted);
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-secondary);
+  margin-bottom: 12px;
+}
+
+.promo-heading {
+  font-size: 26px;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin-bottom: 10px;
+  line-height: 1.2;
+}
+
+.promo-desc {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin-bottom: 20px;
+  max-width: 500px;
+}
+
+.wall-preview-grid {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.wall-preview-item {
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  border: 1px solid var(--border-card);
+  background-color: var(--bg-muted);
+  text-decoration: none;
+  transition: transform var(--transition-fast);
+}
+
+.wall-preview-item:hover {
+  transform: translateY(-2px);
+}
+
+.wall-preview-item img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+
+.wall-preview-label {
+  display: block;
+  padding: 8px 10px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-primary);
+  background-color: var(--bg-card);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Custom Banner */
+.custom-banner-card {
+  background-color: #111315;
+  color: #FFFFFF;
+  border-radius: var(--radius-md);
+  padding: 40px;
+  background-image: radial-gradient(circle at 90% 10%, rgba(255, 255, 255, 0.08) 0%, transparent 60%);
+}
+
+.custom-banner-content {
+  max-width: 580px;
+}
+
+.custom-banner-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #A0A5B0;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.custom-banner-title {
+  font-size: 32px;
+  font-weight: 800;
+  color: #FFFFFF;
+  line-height: 1.2;
+  margin-bottom: 12px;
+}
+
+.custom-banner-desc {
+  font-size: 14px;
+  color: #A0A5B0;
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+
+.custom-banner-content .btn-primary {
+  background-color: #FFFFFF;
+  color: #111315;
+}
+
+.custom-banner-content .btn-primary:hover {
+  background-color: #E5E7EB;
+}
+
+/* Collections Grid */
+.collections-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+  .trending-carousel-row {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (max-width: 900px) {
+  .categories-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .spaces-row-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .trending-carousel-row {
+    display: flex;
+    overflow-x: auto;
+  }
+
+  .trending-carousel-item {
+    min-width: 180px;
+  }
+
+  .products-horizontal-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .wall-promo-card {
+    flex-direction: column;
+  }
+
+  .collections-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .spaces-row-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .collections-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .custom-banner-card {
+    padding: 24px 20px;
+  }
+
+  .custom-banner-title {
+    font-size: 24px;
+  }
+}

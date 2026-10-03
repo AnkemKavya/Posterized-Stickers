@@ -1,0 +1,158 @@
+.app-sidebar {
+  width: var(--sidebar-width);
+  height: 100vh;
+  position: fixed;
+  left: 0;
+  top: 0;
+  background-color: var(--bg-sidebar);
+  color: var(--text-sidebar);
+  display: flex;
+  flex-direction: column;
+  z-index: 1000;
+  border-right: 1px solid rgba(255, 255, 255, 0.05);
+  user-select: none;
+  transition: transform var(--transition-normal);
+}
+
+.sidebar-brand {
+  padding: 24px 20px 22px 20px;
+}
+
+.brand-link {
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+}
+
+.brand-title {
+  color: #FFFFFF;
+  font-size: 17px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+}
+
+.brand-subtitle {
+  color: var(--text-sidebar-muted);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  margin-top: 4px;
+}
+
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 0 12px;
+  flex: 1;
+}
+
+.sidebar-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  color: var(--text-sidebar-muted);
+  font-size: 13.5px;
+  font-weight: 500;
+  transition: all var(--transition-fast);
+  position: relative;
+}
+
+.sidebar-item:hover {
+  color: #FFFFFF;
+  background-color: var(--bg-sidebar-hover);
+}
+
+.sidebar-item.active {
+  background-color: var(--bg-sidebar-active);
+  color: #FFFFFF;
+  font-weight: 600;
+}
+
+.sidebar-item .item-icon {
+  flex-shrink: 0;
+  stroke-width: 2.2;
+}
+
+.sidebar-item.active .item-icon {
+  stroke-width: 2.5;
+}
+
+.sidebar-divider {
+  height: 1px;
+  background-color: rgba(255, 255, 255, 0.06);
+  margin: 14px 4px;
+}
+
+.cart-icon-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.cart-badge {
+  margin-left: auto;
+}
+
+.sidebar-footer {
+  padding: 12px 12px 20px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Handwritten Doodle styling at bottom left */
+.sidebar-doodle {
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  transform: rotate(-4deg);
+  opacity: 0.35;
+  font-family: var(--font-doodle);
+  color: #A0A5B0;
+  pointer-events: none;
+}
+
+.doodle-text {
+  font-size: 21px;
+  line-height: 1.1;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.doodle-stick {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.doodle-smile {
+  stroke-width: 2.2;
+  margin-top: 3px;
+}
+
+/* Mobile Sidebar Backdrop */
+.sidebar-backdrop {
+  display: none;
+}
+
+@media (max-width: 900px) {
+  .app-sidebar {
+    transform: translateX(-100%);
+    box-shadow: 4px 0 20px rgba(0, 0, 0, 0.4);
+  }
+
+  .app-sidebar.open {
+    transform: translateX(0);
+  }
+
+  .sidebar-backdrop {
+    display: block;
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+  }
+}

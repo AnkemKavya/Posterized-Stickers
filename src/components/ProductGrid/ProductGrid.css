@@ -1,0 +1,45 @@
+.product-grid {
+  display: grid;
+  gap: 16px;
+  width: 100%;
+}
+
+/* 6 Column layout (for Trending / Home rows matching screenshot) */
+.grid-cols-6 {
+  grid-template-columns: repeat(6, 1fr);
+}
+
+/* 4 Column layout (for Listing pages like Posters / Stickers) */
+.grid-cols-4 {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.product-grid-empty {
+  padding: 48px 24px;
+  text-align: center;
+  background-color: var(--bg-card);
+  border: 1px dashed var(--border-card);
+  border-radius: var(--radius-md);
+  color: var(--text-secondary);
+  font-size: 14px;
+  width: 100%;
+}
+
+@media (max-width: 1200px) {
+  .grid-cols-6 {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (max-width: 900px) {
+  .grid-cols-6, .grid-cols-4 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .grid-cols-6, .grid-cols-4 {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+}
