@@ -19,6 +19,7 @@
   max-width: 520px;
 }
 
+/* Mobile Nav Toggle */
 .mobile-nav-toggle {
   display: none;
   align-items: center;
@@ -27,6 +28,9 @@
   height: 36px;
   color: var(--text-primary);
   border-radius: var(--radius-sm);
+  background: none;
+  border: none;
+  cursor: pointer;
   transition: background-color var(--transition-fast);
 }
 
@@ -34,7 +38,21 @@
   background-color: var(--bg-muted);
 }
 
-/* Search Field */
+/* Mobile Brand Logo in Navbar (hidden on desktop) */
+.mobile-navbar-brand {
+  display: none;
+  align-items: center;
+  text-decoration: none;
+}
+
+.mobile-brand-title {
+  font-size: 16px;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+  color: var(--text-primary);
+}
+
+/* Desktop Search Field */
 .search-wrapper {
   position: relative;
   width: 100%;
@@ -80,13 +98,16 @@
   display: flex;
   align-items: center;
   padding: 2px;
+  background: none;
+  border: none;
+  cursor: pointer;
 }
 
 .clear-search-btn:hover {
   color: var(--text-primary);
 }
 
-/* Search Dropdown Results */
+/* Search Dropdown Results (Desktop) */
 .search-results-dropdown {
   position: absolute;
   top: calc(100% + 6px);
@@ -213,6 +234,9 @@
   height: 38px;
   border-radius: 50%;
   color: var(--text-primary);
+  background: none;
+  border: none;
+  cursor: pointer;
   transition: background-color var(--transition-fast);
 }
 
@@ -251,12 +275,123 @@
   border-color: var(--text-primary);
 }
 
+/* Mobile search toggle button (hidden on desktop) */
+.mobile-search-toggle-btn {
+  display: none;
+}
+
+/* Expandable Mobile Search Bar Overlay */
+.mobile-search-overlay-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--navbar-height);
+  background-color: var(--bg-content);
+  display: flex;
+  align-items: center;
+  padding: 0 14px;
+  z-index: 105;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+  animation: mobileSearchSlideDown 0.2s ease-out;
+}
+
+@keyframes mobileSearchSlideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.mobile-search-form {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  background-color: var(--bg-input);
+  border-radius: var(--radius-sm);
+  padding: 7px 12px;
+}
+
+.mobile-search-input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  outline: none;
+  font-size: 13.5px;
+  color: var(--text-primary);
+}
+
+.mobile-search-close-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  padding: 4px;
+}
+
+.mobile-search-results-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background-color: var(--bg-content);
+  border-bottom: 1px solid var(--border-card);
+  box-shadow: var(--shadow-lg);
+  max-height: 70vh;
+  overflow-y: auto;
+  z-index: 106;
+}
+
+/* ==================== MOBILE SCREEN SIZING (<= 900px) ==================== */
 @media (max-width: 900px) {
+  .app-navbar {
+    padding: 0 14px;
+  }
+
   .mobile-nav-toggle {
     display: flex;
   }
 
-  .app-navbar {
-    padding: 0 16px;
+  /* Show brand in mobile navbar */
+  .mobile-navbar-brand {
+    display: flex;
+  }
+
+  /* Hide desktop permanent search input */
+  .desktop-search-bar {
+    display: none !important;
+  }
+
+  /* Show mobile search icon in navbar right */
+  .mobile-search-toggle-btn {
+    display: flex;
+  }
+
+  .navbar-left {
+    flex: auto;
+    max-width: none;
+    gap: 10px;
+  }
+
+  .navbar-right {
+    gap: 6px;
+  }
+
+  .navbar-action-btn {
+    width: 34px;
+    height: 34px;
+  }
+
+  .navbar-avatar-img {
+    width: 30px;
+    height: 30px;
   }
 }
