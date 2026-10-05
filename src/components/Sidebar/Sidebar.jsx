@@ -9,7 +9,8 @@ import {
   ShoppingCart,
   UserRound,
   Settings,
-  Smile
+  Smile,
+  X
 } from 'lucide-react';
 import { useCart } from '../../context/CartContext';
 import './Sidebar.css';
@@ -20,15 +21,24 @@ export const Sidebar = ({ isOpen, onClose }) => {
   return (
     <>
       {/* Mobile Backdrop */}
-      {isOpen && <div className="sidebar-backdrop" onClick={onClose} />}
+      {isOpen && <div className="sidebar-backdrop" onClick={onClose} aria-hidden="true" />}
 
-      <aside className={`app-sidebar ${isOpen ? 'open' : ''}`}>
+      <aside className={`app-sidebar ${isOpen ? 'open' : ''}`} aria-label="Main Navigation">
         {/* Brand Logo / Wordmark */}
         <div className="sidebar-brand">
           <NavLink to="/" onClick={onClose} className="brand-link">
             <span className="brand-title">POSTERIZED</span>
             <span className="brand-subtitle">STICKERS</span>
           </NavLink>
+          {/* Mobile-only close button */}
+          <button
+            type="button"
+            className="mobile-sidebar-close"
+            onClick={onClose}
+            aria-label="Close Navigation Menu"
+          >
+            <X size={18} />
+          </button>
         </div>
 
         {/* Main Navigation Links */}

@@ -16,6 +16,9 @@
 
 .sidebar-brand {
   padding: 24px 20px 22px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .brand-link {
@@ -37,6 +40,25 @@
   font-weight: 700;
   letter-spacing: 3px;
   margin-top: 4px;
+}
+
+.mobile-sidebar-close {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-sm);
+  background: none;
+  border: none;
+  color: var(--text-sidebar-muted);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.mobile-sidebar-close:hover {
+  background-color: var(--bg-sidebar-hover);
+  color: #FFFFFF;
 }
 
 .sidebar-nav {
@@ -139,7 +161,14 @@
 }
 
 @media (max-width: 900px) {
+  .mobile-sidebar-close {
+    display: flex;
+  }
+
   .app-sidebar {
+    width: 280px;
+    max-width: 80vw;
+    z-index: 1300;
     transform: translateX(-100%);
     box-shadow: 4px 0 20px rgba(0, 0, 0, 0.4);
   }
@@ -152,7 +181,8 @@
     display: block;
     position: fixed;
     inset: 0;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 999;
+    background-color: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(2px);
+    z-index: 1299;
   }
 }
