@@ -4,12 +4,12 @@
   width: 100%;
 }
 
-/* 6 Column layout (for Trending / Home rows matching screenshot) */
+/* 6 Column layout (for Trending / Home rows) */
 .grid-cols-6 {
   grid-template-columns: repeat(6, 1fr);
 }
 
-/* 4 Column layout (for Listing pages like Posters / Stickers) */
+/* 4 Column layout (for Listing pages like Posters / Stickers / Collections / Search) */
 .grid-cols-4 {
   grid-template-columns: repeat(4, 1fr);
 }
@@ -25,21 +25,38 @@
   width: 100%;
 }
 
+/* Large desktop */
 @media (max-width: 1200px) {
   .grid-cols-6 {
     grid-template-columns: repeat(4, 1fr);
   }
 }
 
-@media (max-width: 900px) {
-  .grid-cols-6, .grid-cols-4 {
+/* Tablet (2-3 columns) */
+@media (max-width: 1024px) {
+  .grid-cols-6 {
     grid-template-columns: repeat(3, 1fr);
+  }
+  .grid-cols-4 {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
   }
 }
 
-@media (max-width: 640px) {
+@media (max-width: 768px) {
   .grid-cols-6, .grid-cols-4 {
     grid-template-columns: repeat(2, 1fr);
     gap: 12px;
+  }
+}
+
+/* Mobile: 2 product columns, using almost entire screen width */
+@media (max-width: 480px) {
+  .product-grid {
+    gap: 10px;
+  }
+  .grid-cols-6, .grid-cols-4 {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
   }
 }
