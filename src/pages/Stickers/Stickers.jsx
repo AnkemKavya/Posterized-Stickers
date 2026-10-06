@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { FilterSidebar } from '../../components/FilterSidebar/FilterSidebar';
+import { ProductToolbar } from '../../components/ProductToolbar/ProductToolbar';
 import { ProductGrid } from '../../components/ProductGrid/ProductGrid';
 import { useProducts } from '../../context/ProductContext';
 import './Stickers.css';
@@ -17,16 +17,18 @@ export const Stickers = () => {
   const initialSurface = searchParams.get('surface') || searchParams.get('subCategory') || '';
   const initialTheme = searchParams.get('theme') || '';
   const initialSpace = searchParams.get('space') || '';
+  const initialSort = searchParams.get('sort') || 'popular';
 
-  const [selectedSurface, setSelectedSurface] = useState(initialSurface);
+  const [selectedCategory, setSelectedCategory] = useState(initialSurface);
   const [selectedTheme, setSelectedTheme] = useState(initialTheme);
   const [inStockOnly, setInStockOnly] = useState(false);
-  const [sortBy, setSortBy] = useState('popular');
+  const [sortBy, setSortBy] = useState(initialSort);
 
   const maxStickerPrice = 500;
   const [currentMaxPrice, setCurrentMaxPrice] = useState(maxStickerPrice);
 
-  const surfaceCategories = [
+  const stickerCategories = [
+    'All Stickers',
     'Laptop',
     'Phone',
     'Bottle',
@@ -39,15 +41,21 @@ export const Stickers = () => {
   const stickerThemes = [
     'Anime',
     'Gaming',
+    'Cars',
+    'Movies',
+    'Music',
+    'Sports',
+    'Funny',
+    'Memes',
     'Cute',
     'Aesthetic',
-    'Cars',
-    'Minimal',
-    'Funny'
+    'Motivation',
+    'Quotes',
+    'Minimal'
   ];
 
   const resetFilters = () => {
-    setSelectedSurface('');
+    setSelectedCategory('');
     setSelectedTheme('');
     setInStockOnly(false);
     setCurrentMaxPrice(maxStickerPrice);
@@ -57,15 +65,33 @@ export const Stickers = () => {
   const filteredProducts = useMemo(() => {
     let result = [...stickerProducts];
 
-    if (selectedSurface) {
+    if (selectedCategory && selectedCategory !== 'All Stickers') {
+      const cat = selectedCategory.toLowerCase();
       result = result.filter(p =>
-        p.subCategory?.toLowerCase() === selectedSurface.toLowerCase() ||
-        p.tags?.some(t => t.toLowerCase() === selectedSurface.toLowerCase())
+        p.subCategory?.toLowerCase() === cat ||
+        p.tags?.some(t => t.toLowerCase() === cat)
       );
     }
 
-    if (selectedTheme) {
-      result = result.filter(p => p.theme?.toLowerCase() === selectedTheme.toLowerCase());
+    if (selectedTheme && selectedTheme !== 'All Themes' && selectedTheme !== 'all') {
+      const t = selectedTheme.toLowerCase();
+      result = result.filter(p => {
+        const pTheme = (p.theme || '').toLowerCase();
+        const pTags = p.tags ? p.tags.map(tag => tag.toLowerCase()) : [];
+        if (t === 'movies') {
+          return pTheme === 'movies' || pTheme === 'superheroes' || pTags.includes('movies') || pTags.includes('superheroes');
+        }
+        if (t === 'sports') {
+          return pTheme === 'sports' || pTheme === 'cricket' || pTags.includes('sports') || pTags.includes('cricket');
+        }
+        if (t === 'memes') {
+          return pTheme === 'memes' || pTheme === 'funny' || pTags.includes('memes') || pTags.includes('funny');
+        }
+        if (t === 'funny') {
+          return pTheme === 'funny' || pTheme === 'memes' || pTags.includes('funny') || pTags.includes('memes');
+        }
+        return pTheme === t || pTags.includes(t);
+      });
     }
 
     if (initialSpace) {
@@ -86,14 +112,16 @@ export const Stickers = () => {
       result.sort((a, b) => a.price - b.price);
     } else if (sortBy === 'price-high') {
       result.sort((a, b) => b.price - a.price);
+    } else if (sortBy === 'rating') {
+      result.sort((a, b) => (b.rating || 0) - (a.rating || 0));
     } else {
-      result.sort((a, b) => (b.isBestSeller ? 1 : 0) - (a.isBestSeller ? 1 : 0));
+      result.sort((a, b) => (b.isBestSeller ? 1 : 0) - (a.isBestSeller ? 1 : 0) || (b.reviewCount || 0) - (a.reviewCount || 0));
     }
 
     return result;
   }, [
     stickerProducts,
-    selectedSurface,
+    selectedCategory,
     selectedTheme,
     initialSpace,
     inStockOnly,
@@ -103,59 +131,51 @@ export const Stickers = () => {
 
   return (
     <div className="catalog-page">
-      {/* Page Header */}
-      <div className="catalog-header">
-        <div>
-          <h1 className="catalog-title">Stickers</h1>
-          <p className="catalog-subtitle">Small details. Big vibes. 100% waterproof vinyl decals.</p>
-        </div>
-
-        {/* Sort Controls */}
-        <div className="catalog-sort-bar">
-          <span className="results-count-text">
-            Showing <strong>{filteredProducts.length}</strong> sticker packs
-          </span>
-          <div className="sort-dropdown-container">
-            <label htmlFor="sticker-sort" className="sort-label">Sort by:</label>
-            <select
-              id="sticker-sort"
-              value={sortBy}
-              onChange={(e) => setSortBy(e.target.value)}
-              className="sort-select"
-            >
-              <option value="popular">Popularity</option>
-              <option value="newest">Newest Drops</option>
-              <option value="price-low">Price: Low to High</option>
-              <option value="price-high">Price: High to Low</option>
-            </select>
-          </div>
-        </div>
+      {/* 1. Page Header */}
+      <div className="catalog-header-text">
+        <h1 className="catalog-title">Stickers</h1>
+        <p className="catalog-subtitle">Small details. Big vibes. 100% waterproof vinyl decals.</p>
       </div>
 
-      {/* Filter Sidebar + Product Grid */}
-      <div className="catalog-layout">
-        <FilterSidebar
-          categories={surfaceCategories}
-          themes={stickerThemes}
-          selectedCategory={selectedSurface}
-          onSelectCategory={setSelectedSurface}
-          selectedTheme={selectedTheme}
-          onSelectTheme={setSelectedTheme}
-          inStockOnly={inStockOnly}
-          onToggleInStock={setInStockOnly}
-          maxPrice={maxStickerPrice}
-          currentMaxPrice={currentMaxPrice}
-          onPriceChange={setCurrentMaxPrice}
-          onResetFilters={resetFilters}
-        />
+      {/* 2. Product Count */}
+      <div className="catalog-count-row">
+        <span className="results-count-text">
+          {filteredProducts.length} {filteredProducts.length === 1 ? 'sticker pack' : 'sticker packs'}
+        </span>
+      </div>
 
-        <div className="catalog-grid-area">
-          <ProductGrid
-            products={filteredProducts}
-            columns={4}
-            emptyMessage="No stickers match the selected surface or theme."
-          />
-        </div>
+      {/* 3. Compact Toolbar: Filter Popover/Drawer + Active Chips + Sort */}
+      <ProductToolbar
+        categories={stickerCategories}
+        selectedCategory={selectedCategory}
+        onSelectCategory={setSelectedCategory}
+        categoryLabel="Surface & Category"
+        themes={stickerThemes}
+        selectedTheme={selectedTheme}
+        onSelectTheme={setSelectedTheme}
+        showSizes={false}
+        showOrientation={false}
+        minPrice={49}
+        maxPrice={maxStickerPrice}
+        currentMaxPrice={currentMaxPrice}
+        onPriceChange={setCurrentMaxPrice}
+        showPrice={true}
+        inStockOnly={inStockOnly}
+        onToggleInStock={setInStockOnly}
+        sortBy={sortBy}
+        onSortChange={setSortBy}
+        onResetFilters={resetFilters}
+        resultCount={filteredProducts.length}
+        itemLabel="stickers"
+      />
+
+      {/* 4. Full-width Product Grid */}
+      <div className="catalog-grid-fullwidth">
+        <ProductGrid
+          products={filteredProducts}
+          columns={4}
+          emptyMessage="No stickers match the selected surface or theme."
+        />
       </div>
     </div>
   );
