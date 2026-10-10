@@ -5,6 +5,7 @@ import { ProductCard } from '../../components/ProductCard/ProductCard';
 import { useWishlist } from '../../context/WishlistContext';
 import { useProducts } from '../../context/ProductContext';
 import '../Profile/Profile.css';
+import './Wishlist.css';
 
 export const Wishlist = () => {
   const { wishlistIds } = useWishlist();
