@@ -50,6 +50,7 @@ function App() {
         <Route path="profile/orders" element={<Orders />} />
         <Route path="profile/addresses" element={<Addresses />} />
         <Route path="profile/wishlist" element={<Wishlist />} />
+        <Route path="wishlist" element={<Wishlist />} />
         <Route path="profile/recently-viewed" element={<RecentlyViewed />} />
         <Route path="profile/designs" element={<CustomDesigns />} />
 
