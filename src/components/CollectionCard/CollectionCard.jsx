@@ -21,7 +21,7 @@ export const CollectionCard = ({ collection }) => {
       </div>
 
       <div className="collection-details">
-        <div>
+        <div className="collection-info-text">
           <h3 className="collection-name">{collection.title}</h3>
           <p className="collection-count">{collection.itemCount || 'Curated Prints'}</p>
         </div>
