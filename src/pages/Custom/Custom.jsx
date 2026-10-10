@@ -230,13 +230,23 @@ export const Custom = () => {
             <div
               key={type.id}
               className={`custom-type-card ${isSelected ? 'active' : ''}`}
+              role="button"
+              tabIndex={0}
+              aria-pressed={isSelected}
               onClick={() => {
                 setSelectedProduct(type);
                 setSelectedSize(type.type === 'poster' ? 'A4' : 'Single 3"');
               }}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  setSelectedProduct(type);
+                  setSelectedSize(type.type === 'poster' ? 'A4' : 'Single 3"');
+                }
+              }}
             >
               <div className="type-card-thumb">
-                <img src={type.image} alt={type.name} />
+                <img src={type.image} alt={type.name} loading="lazy" />
                 {isSelected && (
                   <div className="selected-indicator">
                     <Check size={14} />

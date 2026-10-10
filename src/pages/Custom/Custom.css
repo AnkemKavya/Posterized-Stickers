@@ -43,6 +43,7 @@
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 16px;
+  width: 100%;
 }
 
 .custom-type-card {
@@ -54,6 +55,7 @@
   transition: all var(--transition-fast);
   display: flex;
   flex-direction: column;
+  min-width: 0;
 }
 
 .custom-type-card:hover {
@@ -83,6 +85,11 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+  transition: transform var(--transition-normal);
+}
+
+.custom-type-card:hover .type-card-thumb img {
+  transform: scale(1.04);
 }
 
 .selected-indicator {
@@ -109,6 +116,7 @@
   display: flex;
   flex-direction: column;
   flex: 1;
+  min-width: 0;
 }
 
 .type-title-row {
@@ -116,16 +124,20 @@
   align-items: center;
   gap: 6px;
   margin-bottom: 6px;
+  min-width: 0;
 }
 
 .type-icon {
   color: var(--text-primary);
+  flex-shrink: 0;
 }
 
 .type-name {
   font-size: 14px;
   font-weight: 700;
   color: var(--text-primary);
+  min-width: 0;
+  word-break: break-word;
 }
 
 .type-desc {
@@ -134,6 +146,8 @@
   line-height: 1.4;
   margin-bottom: 12px;
   flex: 1;
+  min-width: 0;
+  word-break: break-word;
 }
 
 .type-price-row {
@@ -142,6 +156,8 @@
   gap: 6px;
   border-top: 1px solid var(--border-subtle);
   padding-top: 8px;
+  margin-top: auto;
+  min-width: 0;
 }
 
 .type-from {
@@ -583,10 +599,6 @@
 }
 
 @media (max-width: 1100px) {
-  .custom-types-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
   .customizer-workspace {
     grid-template-columns: 1fr;
   }
@@ -596,12 +608,134 @@
   }
 }
 
-@media (max-width: 600px) {
+/* Tablet (3 columns - matching Wishlist & Collections) */
+@media (max-width: 1024px) {
   .custom-types-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+  }
+}
+
+/* Small tablet / large mobile (2 columns) */
+@media (max-width: 768px) {
+  .custom-types-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
   }
 
+  .custom-type-card {
+    border-radius: var(--radius-sm);
+  }
+
+  .type-card-info {
+    padding: 12px;
+  }
+
+  .type-name {
+    font-size: 13.5px;
+  }
+
+  .type-desc {
+    font-size: 11.5px;
+    margin-bottom: 10px;
+  }
+}
+
+@media (max-width: 600px) {
   .size-options-grid {
     grid-template-columns: 1fr;
+  }
+}
+
+/* Mobile (exactly 2 cards per row - matching Wishlist & Collections) */
+@media (max-width: 480px) {
+  .custom-studio-page {
+    gap: 24px;
+  }
+
+  .studio-header {
+    padding-bottom: 16px;
+  }
+
+  .studio-title {
+    font-size: 24px;
+  }
+
+  .studio-subtitle {
+    font-size: 13px;
+  }
+
+  .custom-types-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  .type-card-info {
+    padding: 10px 10px 12px;
+  }
+
+  .type-title-row {
+    gap: 5px;
+    margin-bottom: 4px;
+  }
+
+  .type-icon {
+    width: 13px;
+    height: 13px;
+  }
+
+  .type-name {
+    font-size: 12.5px;
+    line-height: 1.25;
+  }
+
+  .type-desc {
+    font-size: 11px;
+    line-height: 1.35;
+    margin-bottom: 8px;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .type-price-row {
+    padding-top: 6px;
+    gap: 4px;
+    flex-wrap: wrap;
+  }
+
+  .type-from {
+    font-size: 10px;
+  }
+
+  .type-price {
+    font-size: 12.5px;
+  }
+
+  .selected-indicator {
+    top: 6px;
+    right: 6px;
+    width: 20px;
+    height: 20px;
+  }
+
+  .selected-indicator svg {
+    width: 12px;
+    height: 12px;
+  }
+
+  .preview-canvas-room {
+    padding: 24px 14px;
+    min-height: 280px;
+  }
+
+  .mockup-frame {
+    width: 220px;
+    max-width: 100%;
+  }
+
+  .config-card {
+    padding: 16px 14px;
   }
 }
