@@ -125,6 +125,7 @@ export const CartProvider = ({ children }) => {
     <CartContext.Provider
       value={{
         cartItems,
+        uniqueCartCount: cartItems.length,
         addToCart,
         updateQuantity,
         removeFromCart,
