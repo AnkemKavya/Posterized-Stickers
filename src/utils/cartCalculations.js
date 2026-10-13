@@ -1,4 +1,4 @@
-import { STORE_CONFIG } from '../config/storeConfig';
+import { STORE_CONFIG } from '../config/storeConfig.js';
 
 /**
  * Calculates cart totals including subtotal, dynamic delivery charge, and grand total.
@@ -18,7 +18,9 @@ export function calculateCartTotals(items = []) {
     subtotal,
     delivery,
     total,
-    itemCount: items.reduce((sum, i) => sum + (Number(i.quantity) || 1), 0),
+    uniqueCount: items.length,
+    itemCount: items.length,
+    totalQuantity: items.reduce((sum, i) => sum + (Number(i.quantity) || 1), 0),
     isFreeDelivery: isEligibleForFreeShipping,
     freeDeliveryThreshold: STORE_CONFIG.freeDeliveryThreshold
   };
