@@ -19,20 +19,21 @@ import './Checkout.css';
 export const Checkout = () => {
   const navigate = useNavigate();
   const { cartItems, totals } = useCart();
-  const { profile, addresses, addOrder } = useProfile();
+  const { customer, updateCustomer, addresses, addOrder } = useProfile();
 
   // Pick default saved address if available
   const defaultAddr = addresses.find(a => a.isDefault) || addresses[0] || {};
 
-  const [customerDetails, setCustomerDetails] = useState({
-    name: profile.name || defaultAddr.fullName || '',
-    phone: profile.phone || defaultAddr.phone || '',
-    address: defaultAddr.addressLine || '',
-    city: defaultAddr.city || '',
-    state: defaultAddr.state || '',
-    pincode: defaultAddr.pincode || '',
+  const [customerDetails, setCustomerDetails] = useState(() => ({
+    name: customer?.name || defaultAddr.fullName || '',
+    phone: customer?.phone || defaultAddr.phone || '',
+    address: customer?.address || defaultAddr.addressLine || '',
+    city: customer?.city || defaultAddr.city || '',
+    state: customer?.state || defaultAddr.state || '',
+    pincode: customer?.pincode || defaultAddr.pincode || '',
+    email: customer?.email || '',
     notes: ''
-  });
+  }));
 
   const [errors, setErrors] = useState({});
   const [isCopied, setIsCopied] = useState(false);
@@ -73,6 +74,18 @@ export const Checkout = () => {
   const handleSendWhatsAppOrder = (e) => {
     e.preventDefault();
     if (!validateForm()) return;
+
+    // Save & persist customer details to localStorage (posterizedCustomer)
+    const customerToSave = {
+      name: customerDetails.name.trim(),
+      phone: customerDetails.phone.trim(),
+      address: customerDetails.address.trim(),
+      city: customerDetails.city.trim(),
+      state: customerDetails.state.trim(),
+      pincode: customerDetails.pincode.trim(),
+      email: (customerDetails.email || '').trim()
+    };
+    updateCustomer(customerToSave);
 
     // Create a local order request record with honest status
     const orderId = `ORD-${Math.floor(1000 + Math.random() * 9000)}`;
@@ -265,6 +278,17 @@ export const Checkout = () => {
                   className={`field-input ${errors.pincode ? 'error' : ''}`}
                 />
                 {errors.pincode && <span className="field-error-text">{errors.pincode}</span>}
+              </div>
+
+              <div className="form-field">
+                <label className="field-label">Email Address (Optional)</label>
+                <input
+                  type="email"
+                  placeholder="e.g. kavya@example.com"
+                  value={customerDetails.email}
+                  onChange={(e) => setCustomerDetails({ ...customerDetails, email: e.target.value })}
+                  className="field-input"
+                />
               </div>
 
               <div className="form-field full-width">
