@@ -45,6 +45,9 @@ export const whatsappService = {
     lines.push(`City: ${customerDetails.city || 'Not provided'}`);
     lines.push(`State: ${customerDetails.state || 'Not provided'}`);
     lines.push(`PIN Code: ${customerDetails.pincode || 'Not provided'}`);
+    if (customerDetails.email && customerDetails.email.trim()) {
+      lines.push(`Email: ${customerDetails.email.trim()}`);
+    }
 
     if (customerDetails.notes && customerDetails.notes.trim()) {
       lines.push(`\nOrder Notes: ${customerDetails.notes.trim()}`);
