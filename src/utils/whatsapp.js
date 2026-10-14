@@ -4,7 +4,7 @@
  * Direct seller communication - no payment gateways.
  */
 
-export const SELLER_WHATSAPP = "919876543210"; // Placeholder seller WhatsApp business number
+export const SELLER_WHATSAPP = "919490878905"; // Placeholder seller WhatsApp business number
 
 /**
  * Generate standard cart order message
