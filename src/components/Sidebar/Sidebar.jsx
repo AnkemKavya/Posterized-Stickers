@@ -16,7 +16,8 @@ import { useCart } from '../../context/CartContext';
 import './Sidebar.css';
 
 export const Sidebar = ({ isOpen, onClose }) => {
-  const { totals } = useCart();
+  const { cartItems, totals } = useCart();
+  const uniqueCartCount = cartItems.length;
 
   return (
     <>
@@ -101,8 +102,8 @@ export const Sidebar = ({ isOpen, onClose }) => {
               <ShoppingCart size={18} className="item-icon" />
             </div>
             <span className="item-label">Cart</span>
-            {totals.itemCount > 0 && (
-              <span className="badge-red cart-badge">{totals.itemCount}</span>
+            {uniqueCartCount > 0 && (
+              <span className="badge-red cart-badge">{uniqueCartCount}</span>
             )}
           </NavLink>
 
