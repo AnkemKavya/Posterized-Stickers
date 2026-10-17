@@ -149,7 +149,7 @@ export const Orders = () => {
               </div>
 
               <a
-                href={`https://wa.me/919876543210?text=Hi%20Posterized!%20Inquiring%20about%20Order%20%23${order.orderId}`}
+                href={`https://wa.me/919490878905?text=Hi%20POSTERIZED!%20Inquiring%20about%20Order%20%23${order.orderId}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn-whatsapp btn-sm-order"
