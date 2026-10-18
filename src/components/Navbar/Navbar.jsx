@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Search, Heart, ShoppingBag, Menu, X, ArrowRight } from 'lucide-react';
+import { Search, Heart, ShoppingBag, Menu, X, ArrowRight, User } from 'lucide-react';
 import { useCart } from '../../context/CartContext';
 import { useWishlist } from '../../context/WishlistContext';
 import { useProducts } from '../../context/ProductContext';
@@ -10,10 +10,12 @@ import './Navbar.css';
 
 export const Navbar = ({ onToggleSidebar }) => {
   const navigate = useNavigate();
-  const { totals } = useCart();
+  const { cartItems, totals } = useCart();
   const { wishlistCount } = useWishlist();
-  const { profile } = useProfile();
+  const { customer, profile } = useProfile();
   const { products, collections } = useProducts();
+
+  const uniqueCartCount = cartItems.length;
 
   const [searchQuery, setSearchQuery] = useState('');
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -226,21 +228,29 @@ export const Navbar = ({ onToggleSidebar }) => {
         <Link
           to="/cart"
           className="navbar-action-btn"
-          aria-label={`Cart (${totals.itemCount} items)`}
+          aria-label={`Cart (${uniqueCartCount} unique items)`}
         >
           <ShoppingBag size={20} className="action-icon" />
-          {totals.itemCount > 0 && (
-            <span className="badge-red navbar-badge">{totals.itemCount}</span>
+          {uniqueCartCount > 0 && (
+            <span className="badge-red navbar-badge">{uniqueCartCount}</span>
           )}
         </Link>
 
-        {/* Profile Avatar */}
-        <Link to="/profile" className="profile-avatar-link" aria-label="Profile">
-          <img
-            src={profile.avatar}
-            alt={profile.name}
-            className="navbar-avatar-img"
-          />
+        {/* Profile Avatar / Neutral User Icon */}
+        <Link
+          to="/profile"
+          className={customer?.avatar ? 'profile-avatar-link' : 'navbar-action-btn'}
+          aria-label="Profile"
+        >
+          {customer?.avatar ? (
+            <img
+              src={customer.avatar}
+              alt={customer.name || 'Profile'}
+              className="navbar-avatar-img"
+            />
+          ) : (
+            <User size={20} className="action-icon" />
+          )}
         </Link>
       </div>
 
