@@ -5,63 +5,25 @@ import { STORE_CONFIG } from '../config/storeConfig';
 const ProfileContext = createContext(null);
 
 export const ProfileProvider = ({ children }) => {
-  // User profile details
-  const [profile, setProfile] = useState(() => {
-    return storageService.get(StorageKeys.USER_PROFILE, STORE_CONFIG.demoUser);
+  // Customer details loaded safely from localStorage (posterizedCustomer)
+  const [customer, setCustomer] = useState(() => {
+    return storageService.getCustomer();
   });
 
   // Orders placed (Pending WhatsApp confirmation)
   const [orders, setOrders] = useState(() => {
-    return storageService.get(StorageKeys.ORDERS, [
-      {
-        orderId: 'ORD-8921',
-        date: '2026-09-28',
-        status: 'Pending WhatsApp confirmation',
-        total: 546,
-        itemsCount: 2,
-        items: [
-          { title: 'Jujutsu Kaisen Poster', size: 'A4', qty: 1, price: 299 },
-          { title: 'Anime Laptop Sticker Pack', size: 'Pack of 15', qty: 1, price: 199 }
-        ]
-      }
-    ]);
+    return storageService.get(StorageKeys.ORDERS, []);
   });
 
   // Saved Addresses
   const [addresses, setAddresses] = useState(() => {
-    return storageService.get(StorageKeys.ADDRESSES, [
-      {
-        id: 'addr-1',
-        isDefault: true,
-        fullName: 'Kavya Sharma',
-        phone: '+91 98765 43210',
-        addressLine: 'Flat 402, Skyline Residency, 100 Feet Road',
-        city: 'Bengaluru',
-        state: 'Karnataka',
-        pincode: '560038'
-      }
-    ]);
+    return storageService.get(StorageKeys.ADDRESSES, []);
   });
 
   // Custom designs saved by user
   const [customDesigns, setCustomDesigns] = useState(() => {
-    return storageService.get(StorageKeys.CUSTOM_DESIGNS, [
-      {
-        id: 'design-1',
-        name: 'Neo Samurai Wall Feature',
-        type: 'Custom Poster',
-        size: 'A3',
-        layout: 'Bold',
-        customText: 'STAY SHARP // NEVER COMPROMISE',
-        createdAt: '2026-09-25',
-        previewImage: 'https://images.unsplash.com/photo-1578632767115-351597cf2477?w=500&auto=format&fit=crop&q=80'
-      }
-    ]);
+    return storageService.get(StorageKeys.CUSTOM_DESIGNS, []);
   });
-
-  useEffect(() => {
-    storageService.set(StorageKeys.USER_PROFILE, profile);
-  }, [profile]);
 
   useEffect(() => {
     storageService.set(StorageKeys.ORDERS, orders);
@@ -75,9 +37,61 @@ export const ProfileProvider = ({ children }) => {
     storageService.set(StorageKeys.CUSTOM_DESIGNS, customDesigns);
   }, [customDesigns]);
 
-  const updateProfile = (updatedData) => {
-    setProfile(prev => ({ ...prev, ...updatedData }));
+  /**
+   * Updates or saves customer details to localStorage (posterizedCustomer)
+   * and synchronizes React state immediately.
+   */
+  const updateCustomer = (updatedData) => {
+    const merged = customer ? { ...customer, ...updatedData } : { ...updatedData };
+    const saved = storageService.saveCustomer(merged);
+    if (saved) {
+      setCustomer(saved);
+
+      // If customer has delivery address, save to addresses list if not already present
+      if (saved.address) {
+        setAddresses(prev => {
+          const exists = prev.some(
+            a => a.addressLine === saved.address && a.pincode === saved.pincode
+          );
+          if (!exists) {
+            return [
+              {
+                id: `addr-${Date.now()}`,
+                isDefault: prev.length === 0,
+                fullName: saved.name || '',
+                phone: saved.phone || '',
+                addressLine: saved.address,
+                city: saved.city || '',
+                state: saved.state || '',
+                pincode: saved.pincode || ''
+              },
+              ...prev
+            ];
+          }
+          return prev;
+        });
+      }
+    }
+    return saved;
   };
+
+  /**
+   * Clear saved customer details
+   */
+  const clearCustomer = () => {
+    storageService.clearCustomer();
+    setCustomer(null);
+  };
+
+  // Backwards-compatible profile object
+  const profile = customer || {
+    name: '',
+    email: '',
+    phone: '',
+    avatar: null
+  };
+
+  const updateProfile = (data) => updateCustomer(data);
 
   const addOrder = (newOrder) => {
     setOrders(prev => [newOrder, ...prev]);
@@ -124,6 +138,9 @@ export const ProfileProvider = ({ children }) => {
   return (
     <ProfileContext.Provider
       value={{
+        customer,
+        updateCustomer,
+        clearCustomer,
         profile,
         updateProfile,
         orders,
